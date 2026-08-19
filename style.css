@@ -87,6 +87,7 @@ header {
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
+  min-width: 0;
   transition: background var(--transition), box-shadow var(--transition), padding var(--transition);
 }
 
@@ -108,7 +109,11 @@ header.scrolled {
   text-shadow: 0 1px 8px rgba(0,0,0,0.3);
   cursor: default;
   user-select: none;
-  flex-shrink: 0;
+  flex-shrink: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 nav ul {
@@ -285,7 +290,8 @@ nav a.active::after {
   position: relative;
   z-index: 2;
   max-width: 820px;
-  padding: 0 2rem;
+  padding: 0 1.5rem;
+  width: 100%;
 }
 
 .hero-badge {
@@ -295,14 +301,16 @@ nav a.active::after {
   color: var(--gold-light);
   font-size: 0.75rem;
   font-weight: 600;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  padding: 0.45rem 1.2rem;
+  padding: 0.45rem 1.1rem;
   border-radius: 50px;
   margin-bottom: 1.5rem;
   opacity: 0;
   transform: translateY(20px);
   animation: fadeUp 0.8s 0.3s ease forwards;
+  max-width: 100%;
+  word-break: break-word;
 }
 
 .hero h1 {
@@ -1164,6 +1172,25 @@ footer h4 {
   }
 }
 
+@media (max-width: 768px) {
+  /* Header: tighter padding so logo + hamburger fit */
+  header { padding: 1rem 4%; }
+  header.scrolled { padding: 0.8rem 4%; }
+
+  .logo { font-size: 1.2rem; }
+
+  /* Hero badge: prevent overflow on narrow screens */
+  .hero-badge {
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    padding: 0.4rem 0.9rem;
+  }
+
+  .hero-content { padding: 0 1.2rem; }
+
+  .hero p { font-size: 1rem; }
+}
+
 @media (max-width: 600px) {
   section { padding: 4.5rem 5%; }
   .menu-section { padding: 4.5rem 5%; }
@@ -1204,6 +1231,28 @@ footer h4 {
 
   .menu-grid { grid-template-columns: 1fr; }
 
-  .hero-cta { flex-direction: column; align-items: center; }
-  .hero-cta .btn, .hero-cta .btn-whatsapp { width: 100%; justify-content: center; }
+  .hero-cta { flex-direction: column; align-items: stretch; gap: 0.8rem; }
+  .hero-cta .btn,
+  .hero-cta .btn-whatsapp { width: 100%; justify-content: center; }
+}
+
+/* Very small phones (≤ 390px) */
+@media (max-width: 390px) {
+  header { padding: 0.85rem 3.5%; }
+  header.scrolled { padding: 0.7rem 3.5%; }
+
+  .logo { font-size: 1.05rem; }
+
+  .hero-badge {
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    padding: 0.35rem 0.75rem;
+  }
+
+  .hero-content { padding: 0 1rem; }
+
+  .hero p { font-size: 0.95rem; }
+
+  .stats-strip { grid-template-columns: 1fr 1fr; gap: 1.2rem; padding: 2.5rem 5%; }
+  .stat-number { font-size: 2.2rem; }
 }
